@@ -8,5 +8,16 @@ export const theme = {
     primary: '#3498db',
     accent: '#f1c40f',
     surface: '#f1c40f'
+  },
+  sizes: {
+    medium: 12,
+    large: 16
+  },
+  highlightedText: {
+    fontWeight: 'bold',
+    textTransform: 'capitalize'
+  },
+  button: {
+    cursor: 'pointer'
   }
 };

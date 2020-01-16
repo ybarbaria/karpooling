@@ -8,20 +8,18 @@ import {
   RegisterScreen,
   ForgotPasswordScreen,
   AuthLoadingScreen,
-  Dashboard
 } from "../screens";
 
 const switchNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+  AuthLoading: AuthLoadingScreen,
   Main: MainTabNavigator,
   HomeScreen,
   RegisterScreen,
   ForgotPasswordScreen,
-  Dashboard,
-  AuthLoadingScreen,
   LoginScreen
 });
 switchNavigator.path = '';
 
-export default createBrowserApp(switchNavigator, { history: 'hash' });
+export default createBrowserApp(switchNavigator, { initialRouteName: "AuthLoadingScreen", history: 'hash' });

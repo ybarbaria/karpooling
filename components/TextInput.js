@@ -6,11 +6,11 @@ import { theme } from "../core/theme";
 const TextInput = ({ errorText, ...props }) => (
   <View style={styles.container}>
     <Input
+      {...props}
       style={styles.input}
       selectionColor={theme.colors.primary}
       theme={{ colors: { primary: theme.colors.primary } }}
       mode="outlined"
-      {...props}
     />
     {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
   </View>
@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     marginVertical: 12
   },
   input: {
-    // backgroundColor: theme.colors.surface
-
+    height: 30
   },
   error: {
     fontSize: 14,

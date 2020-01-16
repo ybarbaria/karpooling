@@ -7,34 +7,36 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import { SearchScreen } from '../screens';
 
 const config = Platform.select({
+  headerMode: 'none',
   web: { headerMode: 'screen' },
-  default: {},
+  default: {}
 });
 
-const HomeStack = createStackNavigator(
+const SearchStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Search: SearchScreen,
   },
-  config
+  { headerMode: 'none' }
 );
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+SearchStack.navigationOptions = {
+  tabBarLabel: 'Ride',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-search${focused ? '' : '-outline'}`
+          : 'md-search'
       }
     />
   ),
 };
 
-HomeStack.path = '';
+SearchStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
@@ -69,7 +71,7 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
+  SearchStack: SearchStack,
   LinksStack,
   SettingsStack,
 });

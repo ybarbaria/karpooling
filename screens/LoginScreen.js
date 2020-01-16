@@ -36,11 +36,13 @@ const LoginScreen = ({ navigation }) => {
       password: password.value
     });
 
+    setLoading(false);
+
     if (response.error) {
       setError(response.error);
+    } else {
+      navigation.navigate("Search");
     }
-
-    setLoading(false);
   };
 
   return (
