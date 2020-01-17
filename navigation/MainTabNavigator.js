@@ -7,7 +7,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { SearchScreen } from '../screens';
+import { SearchScreen, CreateRideScreen } from '../screens';
 
 const config = Platform.select({
   headerMode: 'none',
@@ -70,14 +70,14 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
-const NewButtonStack = createStackNavigator(
+const CreateRideStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    CreateRide: CreateRideScreen,
   },
-  config
+  { headerMode: 'none' }
 )
 
-NewButtonStack.navigationOptions = {
+CreateRideStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} />
   )
@@ -86,7 +86,7 @@ NewButtonStack.navigationOptions = {
 const tabNavigator = createBottomTabNavigator({
   SearchStack: SearchStack,
   LinksStack,
-  NewButtonStack,
+  CreateRideStack,
   SettingsStack,
 }, {
   tabBarOptions: {

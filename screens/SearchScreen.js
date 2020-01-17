@@ -33,11 +33,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 10,
-    // padding: 20,
-    // borderTopWidth: 1,
-    // borderBottomWidth: 1,
-    // borderColor: 'rgb(218, 225, 231)',
+    margin: 10
   },
   dateTime: {
     flex: 1,
@@ -69,10 +65,9 @@ const styles = StyleSheet.create({
   cardDate: {
     margin: 0,
     padding: 0,
-    // backgroundColor: "#F5F5F5",
     height: 40,
     width: 100,
-    borderRadius: 0,
+    borderRadius: 16,
     display: 'flex',
     flexDirection: 'column'
   },
