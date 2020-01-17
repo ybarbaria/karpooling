@@ -5,11 +5,10 @@ import {
     View,
     Text,
     TouchableHighlight,
-    TouchableOpacity,
+    ActivityIndicator,
     Keyboard,
     TextInput
 } from "react-native";
-// import {  } from "react-native-paper";
 import _ from 'lodash';
 import { theme } from "../core/theme";
 import { Icon } from 'react-native-elements'
@@ -60,6 +59,10 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 0,
         color: 'white'
+    },
+    loader: {
+        position: 'absolute',
+        right: 30
     }
 });
 
@@ -72,7 +75,8 @@ export default class InputPlaces extends React.Component {
             address: "",
             predictions: [],
             latitude: undefined,
-            longitude: undefined
+            longitude: undefined,
+            isOnLoad: false
         }
 
         this.onChangeAddressDebounce = _.debounce(this.onChangeAddress, 200);
@@ -108,8 +112,7 @@ export default class InputPlaces extends React.Component {
         try {
             const result = await fetch(apiUrl);
             const json = await result.json();
-            this.setState({ predictions: json.predictions })
-            this.state.predictions.map(p => console.log(p.description));
+            this.setState({ predictions: json.predictions, isOnLoad: false })
         } catch (err) {
             console.log(err);
         }
@@ -140,11 +143,12 @@ export default class InputPlaces extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.autocompleteContainer}>
+                    <ActivityIndicator style={styles.loader} animating={this.state.isOnLoad} size="small" color={theme.colors.primary} />
                     <TextInput
                         placeholder={this.props.placeholder}
                         value={this.state.address}
                         onChangeText={address => {
-                            this.setState({ address });
+                            this.setState({ address, isOnLoad: true });
                             this.onChangeAddressDebounce(address);
                         }}
                         style={styles.addressInput}

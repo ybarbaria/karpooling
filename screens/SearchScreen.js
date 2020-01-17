@@ -1,9 +1,9 @@
 import React, { memo } from "react";
-import { ScrollView, StyleSheet, View, TouchableOpacity, Text, Button } from 'react-native';
+import { ScrollView, StyleSheet, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import Background from "../components/Background";
 import InputPlaces from "../components/InputPlaces";
 import Ride from "../components/Ride";
-import { Paragraph, FAB, Card } from "react-native-paper";
+import { FAB, Card } from "react-native-paper";
 import { theme } from "../core/theme";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -38,26 +38,34 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: 'rgb(218, 225, 231)',
-    // position: 'relative'
   },
   dateTime: {
     flex: 1,
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'space-between',
-    fontSize: 20,
-    // position: 'relative'
+    fontSize: 20
   },
   passengers: {
     flex: 1,
     marginLeft: 'auto'
   },
-
   searchButton: {
-    // position: 'relative',
     elevation: 1,
     width: 100
   },
+  loading: {
+    opacity: 0.5,
+    backgroundColor: "#F5F5F5",
+    elevation: 2,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
 
 export default class SearchScreen extends React.Component {
@@ -125,7 +133,15 @@ export default class SearchScreen extends React.Component {
   }
 
   search() {
-    this.setState({ showResult: true });
+    this.setState({ onLoad: true });
+    // Should be replaced by the fetch to firebase
+    setTimeout(
+      () => {
+        this.setState({ showResult: true });
+        this.setState({ onLoad: false });
+      }, 500
+    )
+
   }
 
   showDatePicker = () => {
@@ -139,6 +155,9 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <Background>
+        {this.state.onLoad && <View style={styles.loading}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+        </View>}
         <Card style={styles.cardContainer}>
           <Card.Title style={styles.cardTitle} title=" Where do you want to go ?" />
           <Card.Content style={styles.cardContent}>
