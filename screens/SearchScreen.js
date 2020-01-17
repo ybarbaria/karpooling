@@ -1,9 +1,9 @@
-import React, { memo } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import Background from "../components/Background";
 import InputPlaces from "../components/InputPlaces";
 import Ride from "../components/Ride";
-import { FAB, Card } from "react-native-paper";
+import { FAB, Card, Avatar, Icon } from "react-native-paper";
 import { theme } from "../core/theme";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 10,
-    padding: 20,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: 'rgb(218, 225, 231)',
+    // padding: 20,
+    // borderTopWidth: 1,
+    // borderBottomWidth: 1,
+    // borderColor: 'rgb(218, 225, 231)',
   },
   dateTime: {
     flex: 1,
@@ -65,6 +65,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  cardDate: {
+    margin: 0,
+    padding: 0,
+    // backgroundColor: "#F5F5F5",
+    height: 40,
+    width: 100,
+    borderRadius: 0,
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  cardDateContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 10
   }
 });
 
@@ -171,13 +188,23 @@ export default class SearchScreen extends React.Component {
               <View style={styles.dateTime}>
                 <TouchableOpacity
                   onPress={() => this.showDatePicker()}>
-                  <Text>{this.formatDate(this.state.date)}
-                  </Text>
+                  <Card style={styles.cardDate}>
+                    <View style={styles.cardDateContent}>
+                      <Avatar.Icon size={24} icon="calendar-today" theme={theme} />
+                      <Text>{this.formatDate(this.state.date)}
+                      </Text>
+                    </View>
+                  </Card>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => this.showTimePicker()}>
-                  <Text>{this.formatTime(this.state.date)}
-                  </Text>
+                  <Card style={styles.cardDate}>
+                    <View style={styles.cardDateContent}>
+                      <Avatar.Icon size={24} icon="clock-outline" theme={theme} />
+                      <Text>{this.formatTime(this.state.date)}
+                      </Text>
+                    </View>
+                  </Card>
                 </TouchableOpacity>
               </View>
             </View>
