@@ -70,10 +70,28 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+const NewButtonStack = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+  },
+  config
+)
+
+NewButtonStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'} />
+  )
+}
+
 const tabNavigator = createBottomTabNavigator({
   SearchStack: SearchStack,
   LinksStack,
+  NewButtonStack,
   SettingsStack,
+}, {
+  tabBarOptions: {
+    showLabel: false
+  }
 });
 
 tabNavigator.path = '';

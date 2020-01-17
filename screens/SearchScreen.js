@@ -3,12 +3,21 @@ import { ScrollView, StyleSheet, View, TouchableOpacity, Text, Button } from 're
 import Background from "../components/Background";
 import InputPlaces from "../components/InputPlaces";
 import Ride from "../components/Ride";
-import { Paragraph, FAB } from "react-native-paper";
+import { Paragraph, FAB, Card } from "react-native-paper";
 import { theme } from "../core/theme";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const styles = StyleSheet.create({
-  container: {
+  cardContainer: {
+    width: '100%',
+  },
+  cardTitle: {
+    width: '100%',
+  },
+  cardContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   scrollView: {
     width: '100%',
@@ -29,7 +38,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: 'rgb(218, 225, 231)',
-    position: 'relative'
+    // position: 'relative'
   },
   dateTime: {
     flex: 1,
@@ -37,15 +46,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'space-between',
     fontSize: 20,
-    position: 'relative'
+    // position: 'relative'
   },
   passengers: {
     flex: 1,
     marginLeft: 'auto'
   },
+
   searchButton: {
-    position: 'relative',
-    elevation: 1
+    // position: 'relative',
+    elevation: 1,
+    width: 100
   },
 });
 
@@ -90,11 +101,18 @@ export default class SearchScreen extends React.Component {
   }
 
   setDate(date) {
-    this.setState({
-      showDatePicker: false,
-      showTimePicker: false,
-      date
-    });
+    if (date) {
+      this.setState({
+        showDatePicker: false,
+        showTimePicker: false,
+        date
+      });
+    } else {
+      this.setState({
+        showDatePicker: false,
+        showTimePicker: false
+      });
+    }
   }
 
   valueChanged(value) {
@@ -120,54 +138,56 @@ export default class SearchScreen extends React.Component {
 
   render() {
     return (
-      <Background style={styles.container}>
-        <Paragraph>
-          Where do you want to go ?
-        </Paragraph>
-        <View style={styles.places}>
-          <InputPlaces placeholder="From" onSelectedValue={this.handleSearchChange} ></InputPlaces>
-        </View>
-        <View style={styles.places}>
-          <InputPlaces placeholder="To" style={styles.places} onSelectedValue={this.handleSearchChange} ></InputPlaces>
-        </View>
-        <View style={styles.parameters}>
-          <View style={styles.dateTime}>
-            <TouchableOpacity
-              onPress={() => this.showDatePicker()}>
-              <Text>{this.formatDate(this.state.date)}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.showTimePicker()}>
-              <Text>{this.formatTime(this.state.date)}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {this.state.showDatePicker
-          &&
-          <DateTimePicker value={this.state.date}
-            is24Hour={true}
-            display="default"
-            onChange={(event, date) => this.setDate(date)}>
-          </DateTimePicker>
-        }
-        {this.state.showTimePicker
-          &&
-          <DateTimePicker value={this.state.date}
-            mode="time"
-            is24Hour={true}
-            display="clock"
-            onChange={(event, date) => this.setDate(date)}>
-          </DateTimePicker>
-        }
-        <FAB
-          style={styles.searchButton}
-          icon="magnify"
-          label="Search"
-          theme={theme}
-          onPress={() => this.search()}
-        />
+      <Background>
+        <Card style={styles.cardContainer}>
+          <Card.Title style={styles.cardTitle} title=" Where do you want to go ?" />
+          <Card.Content style={styles.cardContent}>
+            <View style={styles.places}>
+              <InputPlaces placeholder="From" onSelectedValue={this.handleSearchChange} ></InputPlaces>
+            </View>
+            <View style={styles.places}>
+              <InputPlaces placeholder="To" style={styles.places} onSelectedValue={this.handleSearchChange} ></InputPlaces>
+            </View>
+            <View style={styles.parameters}>
+              <View style={styles.dateTime}>
+                <TouchableOpacity
+                  onPress={() => this.showDatePicker()}>
+                  <Text>{this.formatDate(this.state.date)}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.showTimePicker()}>
+                  <Text>{this.formatTime(this.state.date)}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            {this.state.showDatePicker
+              &&
+              <DateTimePicker value={this.state.date}
+                is24Hour={true}
+                display="default"
+                onChange={(event, date) => this.setDate(date)}>
+              </DateTimePicker>
+            }
+            {this.state.showTimePicker
+              &&
+              <DateTimePicker value={this.state.date}
+                mode="time"
+                is24Hour={true}
+                display="clock"
+                onChange={(event, date) => this.setDate(date)}>
+              </DateTimePicker>
+            }
+            <FAB
+              style={styles.searchButton}
+              icon="magnify"
+              label="Search"
+              theme={theme}
+              onPress={() => this.search()}
+            />
+          </Card.Content>
+        </Card>
         {
           this.state.showResult
           &&
